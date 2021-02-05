@@ -17,11 +17,10 @@
     <link href="{!! asset('assets/vendors/flag-icon/css/flag-icon.min.css') !!}" type="text/css" rel="stylesheet">
 </head>
 <body>
-<div id="loader-wrapper">
-    <div id="loader"></div>
-    <div class="loader-section section-left"></div>
-    <div class="loader-section section-right"></div>
-</div>
+{{--<div id="loader-wrapper">--}}
+{{--    <div class="loader-section section-left"></div>--}}
+{{--    <div class="loader-section section-right"></div>--}}
+{{--</div>--}}
 <header id="header" class="page-topbar">
     <div class="navbar-fixed">
         <nav class="navbar-color gradient-45deg-light-blue-cyan">
@@ -29,8 +28,8 @@
                 <ul class="left">
                     <li>
                         <h1 class="logo-wrapper">
-                            <a href="index.html" class="brand-logo darken-1">
-                                <span class="logo-text hide-on-med-and-down">Materialize</span>
+                            <a href="#" class="brand-logo darken-1" style="padding-top: 30px">
+                                <span class="logo-text hide-on-med-and-down">Locamob</span>
                             </a>
                         </h1>
                     </li>
@@ -62,7 +61,7 @@
                 <li class="no-padding">
                     <ul class="collapsible" data-collapsible="accordion">
                         <li class="bold">
-                            <a href="index.html" class="waves-effect waves-cyan">
+                            <a href="{{route('admin.customers.index')}}" class="waves-effect waves-cyan">
                                 <i class="material-icons">person</i>
                                 <span class="nav-text">Clientes</span>
                             </a>
@@ -100,9 +99,18 @@
 </div>
 <script type="text/javascript" src="{!! asset('assets/vendors/jquery-3.2.1.min.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('assets/js/materialize.min.js') !!}"></script>
+<script type="text/javascript" src="{!! asset('assets/js/jquery.mask.min.js') !!}"></script>
 <script type="text/javascript"
         src="{!! asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('assets/js/plugins.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('assets/js/custom-script.js') !!}"></script>
+
+    @if(session('sucesso'))
+        <script type="text/javascript">
+                Materialize.toast('{{session('sucesso')}}', 4000);
+        </script>
+    @endif
+
+@yield('script')
 </body>
 </html>
