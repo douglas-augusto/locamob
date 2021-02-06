@@ -94,24 +94,13 @@ class OwnerController extends Controller
     public function update(Request $request, $owner)
     {
         try{
+            $owner = Owner::find($owner);
+            $owner->name = $request->name_;
+            $owner->email = $request->email_;
+            $owner->phone = $request->phone_;
+            $owner->transfer_day = $request->transfer_day_;
+            $owner->save();
 
-            Owner::updateOrCreate(
-                [
-                    'id' => $owner
-                ],
-                [
-                    'name' => $request->name_,
-                ],
-                [
-                    'email' => $request->email_,
-                ],
-                [
-                    'phone' => $request->phone_,
-                ],
-                [
-                    'transfer_day' => $request->transfer_day_,
-                ]
-            );
             $request->session()->flash('sucesso', "Proprietário atualizado com sucesso!");
             return response()->json([ 'success' => true ]);
 

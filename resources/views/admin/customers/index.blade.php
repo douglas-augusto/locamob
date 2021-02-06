@@ -158,6 +158,7 @@
 
         $(document).ready(function () {
             $('#phone').mask('(00)00000-0000');
+            $('#phone_').mask('(00)00000-0000');
             $('#modal_new').modal();
             $('#modal_edit').modal();
 

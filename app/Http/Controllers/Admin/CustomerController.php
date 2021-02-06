@@ -95,20 +95,12 @@ class CustomerController extends Controller
     {
         try{
 
-            Customer::updateOrCreate(
-                [
-                    'id' => $customer
-                ],
-                [
-                    'name' => $request->name_,
-                ],
-                [
-                    'email' => $request->email_,
-                ],
-                [
-                    'phone' => $request->phone_,
-                ]
-            );
+            $customer = Customer::find($customer);
+            $customer->name = $request->name_;
+            $customer->email = $request->email_;
+            $customer->phone = $request->phone_;
+            $customer->save();
+
             $request->session()->flash('sucesso', "Cliente atualizado com sucesso!");
             return response()->json([ 'success' => true ]);
 

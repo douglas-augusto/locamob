@@ -18,7 +18,9 @@ class PropertyController extends Controller
     {
         $search = $request->get('search');
 
-        $properties = Property::orderBy('name', 'asc')
+        $properties = Property::join('owners', 'owner_id', 'owners.id')
+            ->select('properties.*', 'owners.name')
+            ->orderBy('properties.id', 'asc')
             ->paginate(10);
 
         return view('admin.properties.index', compact('properties', 'search'));
@@ -76,9 +78,15 @@ class PropertyController extends Controller
     public function edit($property)
     {
         $properties = Property::find($property);
+        $id = $properties->owner_id;
+        $owner = Owner::where('id', '=', $id)
+            ->select('name')
+            ->get();
+        $name = $owner->get('0')->name;
 
         return response()->json([
-            'data' => $properties
+            'data' => $properties,
+            'name' => $name
         ]);
     }
 
@@ -92,24 +100,16 @@ class PropertyController extends Controller
     public function update(Request $request, $property)
     {
         try{
+            $property = Property::find($property);
+            $property->owner_id = $request->owner_id_;
+            $property->street = $request->street_;
+            $property->district = $request->district_;
+            $property->city = $request->city_;
+            $property->number = $request->number_;
+            $property->zip_code = $request->zip_code_;
+            $property->uf = $request->uf_;
+            $property->save();
 
-            Property::updateOrCreate(
-                [
-                    'id' => $property
-                ],
-                [
-                    'name' => $request->name_,
-                ],
-                [
-                    'email' => $request->email_,
-                ],
-                [
-                    'phone' => $request->phone_,
-                ],
-                [
-                    'transfer_day' => $request->transfer_day_,
-                ]
-            );
             $request->session()->flash('sucesso', "Imóvel atualizado com sucesso!");
             return response()->json([ 'success' => true ]);
 
@@ -124,9 +124,26 @@ class PropertyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($property)
     {
-        //
+        try{
+            $property = Property::findOrFail($property);
+            $property->delete();
+
+            session()->flash('sucesso', "Imóvel removido com sucesso!");
+
+            return redirect()->route('admin.properties.index');
+        }catch (\Exception $e){
+            session()->flash('sucesso', 'Erro: '.$e->getMessage());
+            return redirect()->route('admin.properties.index');
+        }
+    }
+
+    public function searchOwner()
+    {
+        $owner = Owner::all();
+
+        return response()->json($owner);
     }
 
 }
