@@ -6,7 +6,7 @@
             <i class="large material-icons">add</i>
         </a>
         <ul>
-            <li><a href="#modal_new" class="btn-floating red modal-trigger" title="Novo Cliente">
+            <li><a href="#modal_new" class="btn-floating red modal-trigger" title="Novo Proprietário">
                     <i class="material-icons">person_add</i></a></li>
 
         </ul>
@@ -16,10 +16,10 @@
             <div class="col s12">
                 <div class="row">
                     <div class="col s8">
-                        <h5 style="padding: 17px;" class="breadcrumbs-title">Clientes</h5>
+                        <h5 style="padding: 17px;" class="breadcrumbs-title">Proprietários</h5>
                     </div>
                     <div class="col s4" style="padding-top: 10px;">
-                        <form action="{{route('admin.customers.index')}}">
+                        <form action="{{route('admin.owners.index')}}">
                             @csrf
                             <div class="input-field col s12">
                                 <i class="material-icons prefix">search</i>
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="card-panel" style="margin-top: -5px;">
-                    @if($customers->isEmpty())
+                    @if($owners->isEmpty())
                         <h6 align="center">Nenhum registro salvo no sistema!</h6>
                     @else
                     <table class="striped">
@@ -39,26 +39,28 @@
                             <th>Nome</th>
                             <th>Email</th>
                             <th>Telefone</th>
+                            <th>Repasse</th>
                             <th>Ações</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($customers as $c)
+                        @foreach($owners as $c)
                             <tr>
                                 <td>{{$c->name}}</td>
                                 <td>{{$c->email}}</td>
                                 <td>{{$c->phone}}</td>
+                                <td>{{$c->transfer_day}}</td>
                                 <td style="padding: 5px 5px;">
                                     <div class="row">
                                         <div class="col s3">
                                             <a id="edit_customer" href='#modal_edit'
-                                               data-rota="{{route('admin.customers.edit',['customer' => $c->id])}}"
-                                               data-update="{{route('admin.customers.update',['customer' => $c->id])}}"
+                                               data-rota="{{route('admin.owners.edit',['owner' => $c->id])}}"
+                                               data-update="{{route('admin.owners.update',['owner' => $c->id])}}"
                                                class="btn-table blue modal-trigger" title="Editar"><i
                                                     class="material-icons">edit</i></a>
                                         </div>
                                         <div class="col s3">
-                                            <form action="{{route('admin.customers.destroy', ['customer' => $c->id])}}"
+                                            <form action="{{route('admin.owners.destroy', ['owner' => $c->id])}}"
                                                   method="post" name="form_delete">
                                                 @method("DELETE")
                                                 @csrf
@@ -73,7 +75,7 @@
                         @endforeach
                         </tbody>
                     </table>
-                    {{ $customers->appends(['search' => $search])->links('vendor.pagination.materializecss') }}
+                    {{ $owners->appends(['search' => $search])->links('vendor.pagination.materializecss') }}
                         @endif
                 </div>
             </div>
@@ -81,16 +83,24 @@
     </div>
     <!-- Modal Cadastrar -->
     <div id="modal_new" class="modal modal-fixed-footer" style="max-height: 58%;">
-        <form class="col s12" action="{{route('admin.customers.store')}}" method="post">
+        <form class="col s12" action="{{route('admin.owners.store')}}" method="post">
             @csrf
             <div class="modal-content">
-                <h5>Novo Locatário</h5>
+                <h5>Novo Proprietário</h5>
                 <div class="row">
                     <div class="row">
-                        <div class="input-field col s12">
+                        <div class="input-field col s10">
                             <input id="name" name="name" type="text" class="validate" required maxlength="50"
                                    placeholder="Insira o nome">
                             <label for="name">Nome</label>
+                        </div>
+                        <div class="input-field col s2">
+                            <select name="transfer_day" id="transfer_day">
+                                @for($i = 1; $i <= 31; $i++)
+                                    <option value="{{$i}}">{{$i}}</option>
+                                @endfor
+                            </select>
+                            <label>Dia do repasse</label>
                         </div>
                     </div>
                     <div class="row">
@@ -121,13 +131,21 @@
             @csrf
             @method("PUT")
             <div class="modal-content">
-                <h5 id="modal-title">Editar Locatário</h5>
+                <h5 id="modal-title">Editar Proprietário</h5>
                 <div class="row">
                     <div class="row">
-                        <div class="input-field col s12">
+                        <div class="input-field col s10">
                             <input id="name_" name="name_" type="text" class="validate" required maxlength="50"
                                    placeholder="Insira o nome">
                             <label for="name_">Nome</label>
+                        </div>
+                        <div class="input-field col s2">
+                            <select name="transfer_day_" id="transfer_day_">
+                                @for($i = 1; $i <= 31; $i++)
+                                    <option value="{{$i}}">{{$i}}</option>
+                                @endfor
+                            </select>
+                            <label>Dia do repasse</label>
                         </div>
                     </div>
                     <div class="row">
@@ -171,8 +189,8 @@
                     $('#name_').val(data.data.name);
                     $('#email_').val(data.data.email);
                     $('#phone_').val(data.data.phone);
+                    $('#transfer_day_').val(data.data.transfer_day).attr('selected', true);
                 })
-
             });
 
             $(function () {

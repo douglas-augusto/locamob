@@ -7,7 +7,7 @@
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="description" content="">
     <meta name="keywords" content="">
-    <title>LocaMob - Gestão de Locação para Imobiliárias</title>
+    <title>Locamob - Gestão de Locação para Imobiliárias</title>
     <link rel="icon" href="{!! asset('assets/images/favicon/favicon-32x32.png') !!}" sizes="32x32">
     <link href="{!! asset('assets/css//materialize.css') !!}" type="text/css" rel="stylesheet">
     <link href="{!! asset('assets/css//style.css') !!}" type="text/css" rel="stylesheet">
@@ -67,13 +67,13 @@
                             </a>
                         </li>
                         <li class="bold">
-                            <a href="cards-basic.html" class="waves-effect waves-cyan">
+                            <a href="{{route('admin.owners.index')}}" class="waves-effect waves-cyan">
                                 <i class="material-icons">person_add</i>
                                 <span class="nav-text">Proprietários</span>
                             </a>
                         </li>
                         <li class="bold">
-                            <a href="ui-basic-buttons.html" class="waves-effect waves-cyan">
+                            <a href="{{route('admin.properties.index')}}" class="waves-effect waves-cyan">
                                 <i class="material-icons">store</i>
                                 <span class="nav-text">Imóveis</span>
                             </a>
