@@ -33,4 +33,9 @@ class Contract extends Model
         return $this->belongsTo(Customer::class);
     }
 
+    public function monthly_payments()
+    {
+        return $this->hasMany(MonthlyPayment::class);
+    }
+
 }

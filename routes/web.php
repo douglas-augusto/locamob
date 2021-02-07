@@ -25,7 +25,10 @@ Route::group(['middleware' => ['auth']], function(){
         Route::resource('customers', 'CustomerController');
         Route::resource('owners', 'OwnerController');
         Route::resource('properties', 'PropertyController');
+        Route::resource('contracts', 'ContractController');
         Route::get('properties/search/owner', 'PropertyController@searchOwner')->name('properties.search.owner');
+        Route::get('contracts/search/property', 'ContractController@searchProperty')->name('properties.search.property');
+        Route::get('contracts/search/customer', 'ContractController@searchCustomer')->name('properties.search.customer');
 
     });
 });

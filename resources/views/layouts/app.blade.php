@@ -79,7 +79,7 @@
                             </a>
                         </li>
                         <li class="bold">
-                            <a href="form-layouts.html" class="waves-effect waves-cyan">
+                            <a href="{{route('admin.contracts.index')}}" class="waves-effect waves-cyan">
                                 <i class="material-icons">insert_drive_file</i>
                                 <span class="nav-text">Contratos</span>
                             </a>
