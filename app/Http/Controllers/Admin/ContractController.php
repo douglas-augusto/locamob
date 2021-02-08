@@ -238,6 +238,7 @@ class ContractController extends Controller
                 ['contract_id', '=', $contract],
                 ['type', '=', 'M']
         ])
+        ->orderBy('id', 'asc')    
         ->get();
 
         return view('admin.contracts.monthly_payment', compact('monthly_payments'));
@@ -270,7 +271,8 @@ class ContractController extends Controller
             ['contract_id', '=', $contract],
             ['type', '=', 'R']
         ])
-            ->get();
+        ->orderBy('id', 'asc')
+        ->get();
 
         return view('admin.contracts.transfer', compact('transfers'));
     }
