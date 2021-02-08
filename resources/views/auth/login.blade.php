@@ -231,13 +231,13 @@
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
-                <input type="text" placeholder="Email" id="email" name="email" value="{{ old('email') }}" required autocomplete="email">
+                <input type="text" placeholder="Insira email válido com '@'" id="email" name="email" value="{{ old('email') }}" required autocomplete="email">
                 @error('email')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
-                <input type="password" placeholder="Senha" id="password" name="password" required autocomplete="new-password">
+                <input type="password" placeholder="Senha no mínimo 8 caracteres" id="password" name="password" required autocomplete="new-password">
                 @error('password')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
