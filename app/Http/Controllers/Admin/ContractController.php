@@ -24,6 +24,8 @@ class ContractController extends Controller
         $contracts = Contract::join('owners', 'owner_id', 'owners.id')
             ->join('customers', 'customer_id', 'customers.id')
             ->select('owners.name AS name_owner', 'customers.name AS name_customer', 'contracts.start_day', 'contracts.end_day', 'contracts.id')
+            ->where('owners.name', 'LIKE', '%'.$search.'%')
+            ->orWhere('customers.name', 'LIKE', '%'.$search.'%')
             ->orderBy('contracts.id', 'asc')
             ->paginate(10);
 
@@ -141,12 +143,20 @@ class ContractController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $contract
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($contract)
     {
-        //
+        $contracts = Contract::join('owners', 'owner_id', 'owners.id')
+        ->join('customers', 'customer_id', 'customers.id')
+        ->select('owners.name AS name_owner', 'customers.name AS name_customer', 'contracts.*')
+        ->where('contracts.id', '=', $contract)
+        ->get();
+
+        return response()->json([
+            'data' => $contracts
+        ]);
     }
 
     /**
@@ -180,7 +190,25 @@ class ContractController extends Controller
      */
     public function destroy($contract)
     {
-        //
+        try{
+            $month = MonthlyPayment::where('contract_id', '=', $contract)
+                ->get();
+
+            foreach ($month as $m){
+                $mon = MonthlyPayment::findOrFail($m->id);
+                $mon->delete();
+            }
+
+            $owner = Contract::findOrFail($contract);
+            $owner->delete();
+
+            session()->flash('sucesso', "Contrato removido com sucesso!");
+
+            return redirect()->route('admin.contracts.index');
+        }catch (\Exception $e){
+            session()->flash('sucesso', 'Erro: '.$e->getMessage());
+            return redirect()->route('admin.contracts.index');
+        }
     }
 
     public function searchProperty()

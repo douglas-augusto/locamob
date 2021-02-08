@@ -20,6 +20,7 @@ class PropertyController extends Controller
 
         $properties = Property::join('owners', 'owner_id', 'owners.id')
             ->select('properties.*', 'owners.name')
+            ->where('owners.name', 'LIKE', '%'.$search.'%')
             ->orderBy('properties.id', 'asc')
             ->paginate(10);
 

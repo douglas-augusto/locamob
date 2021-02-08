@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Contract;
+use App\Customer;
+use App\Owner;
+use App\Property;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +27,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $customers = Customer::count();
+        $owners = Owner::count();
+        $properties = Property::count();
+        $contracts = Contract::count();
+
+        return view('home', compact('customers', 'owners', 'properties', 'contracts'));
     }
 }

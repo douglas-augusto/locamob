@@ -34,22 +34,6 @@
                         </h1>
                     </li>
                 </ul>
-                <div class="header-search-wrapper hide-on-med-and-down">
-                    <i class="material-icons">search</i>
-                    <input type="text" name="Search" class="header-search-input z-depth-2"
-                           placeholder="Buscar em locamob"/>
-                </div>
-                <ul class="right hide-on-med-and-down">
-                    <li>
-                        <a href="javascript:void(0);" onclick="document.querySelector('form.logout').submit()"
-                           class="waves-effect waves-block waves-light profile-button">
-                            Sair
-                        </a>
-                        <form action="{{route('logout')}}" class="logout" method="post" style="display:none">
-                            @csrf
-                        </form>
-                    </li>
-                </ul>
             </div>
         </nav>
     </div>
@@ -60,6 +44,12 @@
             <ul id="slide-out" class="side-nav fixed leftside-navigation">
                 <li class="no-padding">
                     <ul class="collapsible" data-collapsible="accordion">
+                        <li class="bold">
+                            <a href="{{route('home')}}" class="waves-effect waves-cyan">
+                                <i class="material-icons">dashboard</i>
+                                <span class="nav-text">Dashboard</span>
+                            </a>
+                        </li>
                         <li class="bold">
                             <a href="{{route('admin.customers.index')}}" class="waves-effect waves-cyan">
                                 <i class="material-icons">person</i>
@@ -83,6 +73,17 @@
                                 <i class="material-icons">insert_drive_file</i>
                                 <span class="nav-text">Contratos</span>
                             </a>
+                        </li>
+                        <div style="margin-bottom: 15px"></div>
+                        <li class="bold">
+                            <a href="javascript:void(0);" onclick="document.querySelector('form.logout').submit()"
+                               class="waves-effect waves-block waves-light profile-button">
+                                <i class="material-icons">exit_to_app</i>
+                                <span class="nav-text">Sair</span>
+                            </a>
+                            <form action="{{route('logout')}}" class="logout" method="post" style="display:none">
+                                @csrf
+                            </form>
                         </li>
                     </ul>
                 </li>

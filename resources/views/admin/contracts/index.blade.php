@@ -23,7 +23,8 @@
                             @csrf
                             <div class="input-field col s12">
                                 <i class="material-icons prefix">search</i>
-                                <input id="icon_prefix" value="{{$search}}" name='search' id='search' type="text" class="active" placeholder="">
+                                <input id="icon_prefix" value="{{$search}}" name='search' id='search' type="text"
+                                       class="active" placeholder="">
                                 <label for="icon_prefix">Buscar</label>
                             </div>
                         </form>
@@ -33,58 +34,60 @@
                     @if($contracts->isEmpty())
                         <h6 align="center">Nenhum registro salvo no sistema!</h6>
                     @else
-                    <table class="striped">
-                        <thead>
-                        <tr>
-                            <th>Locatário</th>
-                            <th>Locador</th>
-                            <th>Início</th>
-                            <th>Fim</th>
-                            <th>Ações</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($contracts as $c)
+                        <table class="striped">
+                            <thead>
                             <tr>
-                                <td>{{$c->name_owner}}</td>
-                                <td>{{$c->name_customer}}</td>
-                                <td>{{date("d/m/Y", strtotime($c->start_day))}}</td>
-                                <td>{{date("d/m/Y", strtotime($c->end_day))}}</td>
-                                <td style="padding: 5px 5px;">
-                                    <div class="row">
-                                        <div class="col s2">
-                                            <a href='{{route('admin.contracts.monthly_payments',['contract' => $c->id,])}}' class="btn-table orange modal-trigger" title="Ver mensalidades"><i
-                                                    class="material-icons">date_range</i></a>
-                                        </div>
-                                        <div class="col s2">
-                                            <a href='{{route('admin.contracts.transfers',['contract' => $c->id,])}}' class="btn-table orange modal-trigger" title="Ver repasses"><i
-                                                    class="material-icons">add_to_photos</i></a>
-                                        </div>
-                                        <div class="col s2">
-                                            <a id="edit_customer" href='#modal_edit'
-                                               data-rota="{{route('admin.contracts.edit',['contract' => $c->id])}}"
-                                               data-update="{{route('admin.contracts.update',['contract' => $c->id])}}"
-                                               class="btn-table green modal-trigger" title="Ver contrato"><i
-                                                    class="material-icons">remove_red_eye</i></a>
-                                        </div>
-                                        <div class="col s2">
-                                            <form action="{{route('admin.contracts.destroy', ['contract' => $c->id])}}"
-                                                  method="post" name="form_delete">
-                                                @method("DELETE")
-                                                @csrf
-                                                <button class="btn-table red" title="Apagar" type="submit"
-                                                        onclick="return confirm('Tem certeza que deseja apagar o registro?')">
-                                                    <i class="material-icons">delete</i></button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </td>
+                                <th>Locatário</th>
+                                <th>Locador</th>
+                                <th>Início</th>
+                                <th>Fim</th>
+                                <th>Ações</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                    {{ $contracts->appends(['search' => $search])->links('vendor.pagination.materializecss') }}
-                        @endif
+                            </thead>
+                            <tbody>
+                            @foreach($contracts as $c)
+                                <tr>
+                                    <td>{{$c->name_owner}}</td>
+                                    <td>{{$c->name_customer}}</td>
+                                    <td>{{date("d/m/Y", strtotime($c->start_day))}}</td>
+                                    <td>{{date("d/m/Y", strtotime($c->end_day))}}</td>
+                                    <td style="padding: 5px 5px;">
+                                        <div class="row">
+                                            <div class="col s2">
+                                                <a href='{{route('admin.contracts.monthly_payments',['contract' => $c->id,])}}'
+                                                   class="btn-table orange modal-trigger" title="Ver mensalidades"><i
+                                                        class="material-icons">date_range</i></a>
+                                            </div>
+                                            <div class="col s2">
+                                                <a href='{{route('admin.contracts.transfers',['contract' => $c->id,])}}'
+                                                   class="btn-table orange modal-trigger" title="Ver repasses"><i
+                                                        class="material-icons">add_to_photos</i></a>
+                                            </div>
+                                            <div class="col s2">
+                                                <a id="edit_customer" href='#modal_edit'
+                                                   data-rota="{{route('admin.contracts.show',['contract' => $c->id])}}"
+                                                   class="btn-table green modal-trigger" title="Ver contrato"><i
+                                                        class="material-icons">remove_red_eye</i></a>
+                                            </div>
+                                            <div class="col s2">
+                                                <form
+                                                    action="{{route('admin.contracts.destroy', ['contract' => $c->id])}}"
+                                                    method="post" name="form_delete">
+                                                    @method("DELETE")
+                                                    @csrf
+                                                    <button class="btn-table red" title="Apagar" type="submit"
+                                                            onclick="return confirm('Tem certeza que deseja apagar o registro?')">
+                                                        <i class="material-icons">delete</i></button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        {{ $contracts->appends(['search' => $search])->links('vendor.pagination.materializecss') }}
+                    @endif
                 </div>
             </div>
         </div>
@@ -113,30 +116,36 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s3">
-                            <input id="start_day" name="start_day" type="text" class="dataIniFim" placeholder="" required>
+                            <input id="start_day" name="start_day" type="text" class="dataIniFim" placeholder=""
+                                   required>
                             <label for="start_day">Data inicial</label>
                         </div>
                         <div class="input-field col s3">
-                            <input id="end_day" name="end_day" type="text" class="validate" placeholder="" readonly required>
+                            <input id="end_day" name="end_day" type="text" class="validate" placeholder="" readonly
+                                   required>
                             <label for="phone">Data final</label>
                         </div>
                         <div class="input-field col s3">
-                            <input id="administrative_fee" name="administrative_fee" type="text" class="active" maxlength="10" required
-                            placeholder="">
+                            <input id="administrative_fee" name="administrative_fee" type="text" class="active"
+                                   maxlength="10" required
+                                   placeholder="">
                             <label for="administrative_fee">Taxa Administrativa</label>
                         </div>
                         <div class="input-field col s3">
-                            <input id="rent_amount" name="rent_amount" type="text" class="active" maxlength="10" required
-                            placeholder="">
+                            <input id="rent_amount" name="rent_amount" type="text" class="active" maxlength="10"
+                                   required
+                                   placeholder="">
                             <label for="rent_amount">Aluguel</label>
                         </div>
                         <div class="input-field col s3">
-                            <input id="condominium_amount" name="condominium_amount" type="text" class="active" maxlength="10" required
-                            placeholder="">
+                            <input id="condominium_amount" name="condominium_amount" type="text" class="active"
+                                   maxlength="10" required
+                                   placeholder="">
                             <label for="condominium_amount">Condomínio</label>
                         </div>
                         <div class="input-field col s3">
-                            <input id="iptu_amount" name="iptu_amount" type="text" class="active" maxlength="10" required
+                            <input id="iptu_amount" name="iptu_amount" type="text" class="active" maxlength="10"
+                                   required
                                    placeholder="">
                             <label for="iptu_amount">IPTU</label>
                         </div>
@@ -151,41 +160,55 @@
         </form>
     </div>
 
-    <!-- Modal Editar -->
-    <div id="modal_edit" class="modal modal-fixed-footer" style="max-height: 58%;">
-        <form class="col s12" name="edit_form">
-            @csrf
-            @method("PUT")
-            <div class="modal-content">
-                <h5 id="modal-title">Editar Locatário</h5>
+    <!-- Modal Ver -->
+    <div id="modal_edit" class="modal" style="height: 400px; max-height: 100%;">
+        <div class="modal-content">
+            <h5 id="modal-title">Ver Contrato</h5>
+            <div class="row">
                 <div class="row">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input id="name_" name="name_" type="text" class="validate" required maxlength="50"
-                                   placeholder="Insira o nome">
-                            <label for="name_">Nome</label>
-                        </div>
+                    <div class="input-field col s6">
+                        <input type="text" id="property_" name="property_" class="active" readonly
+                               placeholder="" autocomplete="off">
+                        <label for="property_">Imóvel</label>
                     </div>
-                    <div class="row">
-                        <div class="input-field col s8">
-                            <input id="email_" name="email_" type="text" class="validate" maxlength="40"
-                                   placeholder="Insira o email">
-                            <label for="email_">Email</label>
-                        </div>
-                        <div class="input-field col s4">
-                            <input id="phone_" name="phone_" type="text" class="validate" required
-                                   placeholder="Insira o telefone">
-                            <label for="phone_">Telefone</label>
-                        </div>
+                    <div class="input-field col s6">
+                        <input type="text" id="customer_" name="customer_" class="active" readonly
+                               placeholder="" autocomplete="off">
+                        <label for="customer_">Locatário</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s3">
+                        <input id="start_day_" name="start_day_" type="text" class="active" placeholder="" readonly>
+                        <label for="start_day_">Data inicial</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input id="end_day_" name="end_day_" type="text" class="active" placeholder="" readonly>
+                        <label for="end_day_">Data final</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input id="administrative_fee_" name="administrative_fee_" type="text" class="active"
+                               maxlength="10" required placeholder="">
+                        <label for="administrative_fee_">Taxa Administrativa</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input id="rent_amount_" name="rent_amount_" type="text" class="active" maxlength="10" readonly
+                               placeholder="">
+                        <label for="rent_amount_">Aluguel</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input id="condominium_amount_" name="condominium_amount_" type="text" class="active"
+                               maxlength="10" readonly placeholder="">
+                        <label for="condominium_amount_">Condomínio</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input id="iptu_amount_" name="iptu_amount_" type="text" class="active" maxlength="10" required
+                               placeholder="">
+                        <label for="iptu_amount_">IPTU</label>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer" style="padding-right: 20px">
-                <button class="waves-effect waves-light btn green" type="submit">
-                    Salvar
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
 
 @endsection
@@ -196,15 +219,17 @@
         $(document).ready(function () {
 
             function FormataStringData(data) {
-                var dia  = data.split("/")[0];
-                var mes  = data.split("/")[1];
-                var ano  = data.split("/")[2];
+                var dia = data.split("/")[0];
+                var mes = data.split("/")[1];
+                var ano = data.split("/")[2];
 
-                return ano + '-' + ("0"+mes).slice(-2) + '-' + ("0"+dia).slice(-2);
+                return ano + '-' + ("0" + mes).slice(-2) + '-' + ("0" + dia).slice(-2);
                 // Utilizo o .slice(-2) para garantir o formato com 2 digitos.
             }
 
-            $('.dataIniFim').on('mousedown',function(event){ event.preventDefault(); }).pickadate({
+            $('.dataIniFim').on('mousedown', function (event) {
+                event.preventDefault();
+            }).pickadate({
                 selectMonths: true,
                 selectYears: 15,
                 labelMonthNext: 'Próximo Mês',
@@ -220,11 +245,11 @@
                 clear: 'Limpar',
                 close: 'Fechar',
                 format: 'dd/mm/yyyy',
-                onClose: function() {
+                onClose: function () {
                     var dataa = $('#start_day').val();
                     var dataFormatada = FormataStringData(dataa);
 
-                    var addAno = moment(dataFormatada).add(1,'year');
+                    var addAno = moment(dataFormatada).add(1, 'year');
                     var novaData = moment(addAno).format('DD/MM/YYYY');
 
                     $('#end_day').val(novaData);
@@ -239,34 +264,29 @@
             $('#modal_new').modal();
             $('#modal_edit').modal();
 
-            var update;
+            function formatMoney(n, c, d, t) {
+                c = isNaN(c = Math.abs(c)) ? 2 : c, d = d == undefined ? "," : d, t = t == undefined ? "." : t, s = n < 0 ?
+                    "-" : "", i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", j = (j = i.length) > 3 ? j % 3 : 0;
+                return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math
+                    .abs(n - i).toFixed(c).slice(2) : "");
+            }
 
             $('body').on('click', '#edit_customer', function (event) {
                 event.preventDefault();
                 var rota = $(this).data('rota');
-                update = $(this).data('update');
                 $.get(rota, function (data) {
-                    $('#name_').val(data.data.name);
-                    $('#email_').val(data.data.email);
-                    $('#phone_').val(data.data.phone);
+                    $('#property_').val(data.data[0].name_owner);
+                    $('#customer_').val(data.data[0].name_customer);
+                    $('#start_day_').val(moment(data.data[0].start_day).format('DD/MM/YYYY'));
+                    $('#end_day_').val(moment(data.data[0].end_day).format('DD/MM/YYYY'));
+                    $('#administrative_fee_').val(formatMoney(data.data[0].administrative_fee));
+                    $('#rent_amount_').val(formatMoney(data.data[0].rent_amount));
+                    $('#condominium_amount_').val(formatMoney(data.data[0].condominium_amount));
+                    $('#iptu_amount_').val(formatMoney(data.data[0].iptu_amount));
                 })
 
             });
 
-            $(function () {
-                $('form[name="edit_form"]').submit(function (event) {
-                    event.preventDefault();
-                    $.ajax({
-                        url: update,
-                        type: "post",
-                        data: $(this).serialize(),
-                        dataType: 'json',
-                        success: function (response) {
-                            window.location.reload(true);
-                        }
-                    });
-                });
-            });
 
             $('#search').keypress(function (e) {
                 if (e.which == 13) {
@@ -303,7 +323,7 @@
                     var dataCust2 = {};
 
                     for (var i = 0; i < custArray.length; i++) {
-                        dataCust['Locador: '+custArray[i].name +' | Endereço: '+custArray[i].street +', '+custArray[i].number] = null;
+                        dataCust['Locador: ' + custArray[i].name + ' | Endereço: ' + custArray[i].street + ', ' + custArray[i].number] = null;
                         dataCust2[custArray[i].number] = custArray[i];
                     }
                     $('input#property').autocomplete({
