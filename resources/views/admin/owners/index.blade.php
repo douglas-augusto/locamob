@@ -96,8 +96,12 @@
                         </div>
                         <div class="input-field col s2">
                             <select name="transfer_day" id="transfer_day">
-                                @for($i = 1; $i <= 31; $i++)
-                                    <option value="{{$i}}">{{$i}}</option>
+                                @for($i = 1; $i <= 25; $i++)
+                                    @if($i < 10)
+                                        <option value="{{'0'.$i}}">{{'0'.$i}}</option>
+                                    @else
+                                        <option value="{{$i}}">{{$i}}</option>
+                                    @endif
                                 @endfor
                             </select>
                             <label>Dia do repasse</label>
@@ -141,8 +145,12 @@
                         </div>
                         <div class="input-field col s2">
                             <select name="transfer_day_" id="transfer_day_">
-                                @for($i = 1; $i <= 31; $i++)
-                                    <option value="{{$i}}">{{$i}}</option>
+                                @for($i = 1; $i <= 25; $i++)
+                                    @if($i < 10)
+                                        <option value="{{'0'.$i}}">{{'0'.$i}}</option>
+                                    @else
+                                        <option value="{{$i}}">{{$i}}</option>
+                                    @endif
                                 @endfor
                             </select>
                             <label>Dia do repasse</label>

@@ -60,6 +60,9 @@ class ContractController extends Controller
             $condominium = str_replace(',','.',str_replace('.','',$request->condominium_amount));
             $iptu = str_replace(',','.',str_replace('.','',$request->iptu_amount));
 
+            $owner = Owner::where('id', '=', $request->owner_id)->get();
+            $transfer_day = $owner->get('0')->transfer_day;
+
             $contract = Contract::create([
                 'property_id' => $request->property_id,
                 'owner_id' => $request->owner_id,
@@ -97,9 +100,10 @@ class ContractController extends Controller
                 'pay_value' => $valor_parcela,
                 'type' => 'M'
             ]);
+            $pag_data_transfer = $ano.'-'.$mes.'-'.$transfer_day;
             MonthlyPayment::create([
                 'contract_id' => $id_contract,
-                'pay_day' => $start,
+                'pay_day' => $pag_data_transfer,
                 'pay_value' => $total_repasse,
                 'type' => 'R'
             ]);
@@ -114,6 +118,7 @@ class ContractController extends Controller
                 }
 
              $pag_data = $ano.'-'.$mes.'-'.'01';
+                $pag_data_transfer = $ano.'-'.$mes.'-'.$transfer_day;
 
                 MonthlyPayment::create([
                     'contract_id' => $id_contract,
@@ -123,7 +128,7 @@ class ContractController extends Controller
                 ]);
                 MonthlyPayment::create([
                     'contract_id' => $id_contract,
-                    'pay_day' => $pag_data,
+                    'pay_day' => $pag_data_transfer,
                     'pay_value' => $total_repasse,
                     'type' => 'R'
                 ]);

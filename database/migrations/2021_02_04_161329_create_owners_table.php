@@ -18,7 +18,7 @@ class CreateOwnersTable extends Migration
             $table->string('name');
             $table->string('email')->unique()->nullable();
             $table->string('phone');
-            $table->integer('transfer_day');
+            $table->string('transfer_day',2);
             $table->timestamps();
         });
     }
