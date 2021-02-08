@@ -16,13 +16,13 @@ class CreatePropertiesTable extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('owner_id');
-            $table->string('street')->nullable();
-            $table->string('number')->nullable();
-            $table->string('complement')->nullable();
-            $table->string('district')->nullable();
-            $table->string('zip_code')->nullable();
-            $table->string('city')->nullable();
-            $table->string('uf')->nullable();
+            $table->string('street',50)->nullable();
+            $table->string('number',10)->nullable();
+            $table->string('complement',50)->nullable();
+            $table->string('district',50)->nullable();
+            $table->string('zip_code',20)->nullable();
+            $table->string('city',50)->nullable();
+            $table->string('uf',20)->nullable();
             $table->timestamps();
 
             $table->foreign('owner_id')->references('id')->on('owners');

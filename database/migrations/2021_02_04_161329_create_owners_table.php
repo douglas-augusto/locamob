@@ -15,9 +15,9 @@ class CreateOwnersTable extends Migration
     {
         Schema::create('owners', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('email')->unique()->nullable();
-            $table->string('phone');
+            $table->string('name',50);
+            $table->string('email',40)->unique()->nullable();
+            $table->string('phone',25);
             $table->string('transfer_day',2);
             $table->timestamps();
         });
