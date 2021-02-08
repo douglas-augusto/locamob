@@ -9,15 +9,15 @@
 
 ## Setup
 
-1 - git clone https://github.com/douglas-augusto/locamob.git
-2 - rename .env.example for .env
-3 - composer install
-4 - php artisan key:generate
-5 - php artisan migrate:install
-6 - php artisan migrate
+1 - git clone https://github.com/douglas-augusto/locamob.git<br>
+2 - rename .env.example for .env<br>
+3 - composer install<br>
+4 - php artisan key:generate<br>
+5 - php artisan migrate:install<br>
+6 - php artisan migrate<br>
 
-Versão do PHP = 7.4
-Versão do Laravel = 6
+Versão do PHP = 7.4<br>
+Versão do Laravel = 6<br>
 
-Enjoy!
+Enjoy!<br>
 Thanks!
