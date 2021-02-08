@@ -53,11 +53,11 @@
                                 <td style="padding: 5px 5px;">
                                     <div class="row">
                                         <div class="col s2">
-                                            <a href='#' class="btn-table orange modal-trigger" title="Ver mensalidades"><i
+                                            <a href='{{route('admin.contracts.monthly_payments',['contract' => $c->id,])}}' class="btn-table orange modal-trigger" title="Ver mensalidades"><i
                                                     class="material-icons">date_range</i></a>
                                         </div>
                                         <div class="col s2">
-                                            <a href='#' class="btn-table orange modal-trigger" title="Ver repasses"><i
+                                            <a href='{{route('admin.contracts.transfers',['contract' => $c->id,])}}' class="btn-table orange modal-trigger" title="Ver repasses"><i
                                                     class="material-icons">add_to_photos</i></a>
                                         </div>
                                         <div class="col s2">
@@ -190,33 +190,45 @@
 
 @endsection
 @section('script')
+    <script type="text/javascript" src="{!! asset('assets/js/moment.js') !!}"></script>
     <script type="text/javascript">
 
         $(document).ready(function () {
 
+            function FormataStringData(data) {
+                var dia  = data.split("/")[0];
+                var mes  = data.split("/")[1];
+                var ano  = data.split("/")[2];
+
+                return ano + '-' + ("0"+mes).slice(-2) + '-' + ("0"+dia).slice(-2);
+                // Utilizo o .slice(-2) para garantir o formato com 2 digitos.
+            }
+
             $('.dataIniFim').on('mousedown',function(event){ event.preventDefault(); }).pickadate({
                 selectMonths: true,
                 selectYears: 15,
-                // Título dos botões de navegação
                 labelMonthNext: 'Próximo Mês',
                 labelMonthPrev: 'Mês Anterior',
-                // Título dos seletores de mês e ano
                 labelMonthSelect: 'Selecione o Mês',
                 labelYearSelect: 'Selecione o Ano',
-                // Meses e dias da semana
                 monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
                 monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
                 weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
                 weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
-                // Letras da semana
                 weekdaysLetter: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
-                //Botões
                 today: 'Hoje',
                 clear: 'Limpar',
                 close: 'Fechar',
-                // Formato da data que aparece no input
                 format: 'dd/mm/yyyy',
+                onClose: function() {
+                    var dataa = $('#start_day').val();
+                    var dataFormatada = FormataStringData(dataa);
 
+                    var addAno = moment(dataFormatada).add(1,'year');
+                    var novaData = moment(addAno).format('DD/MM/YYYY');
+
+                    $('#end_day').val(novaData);
+                }
             });
 
             $('#administrative_fee').mask('#.##0,00', {reverse: true});
@@ -303,10 +315,6 @@
                         }
                     });
                 }
-            });
-
-            $("#start_day").focusout(function() {
-                var data = $('start_day').val();
             });
 
         });

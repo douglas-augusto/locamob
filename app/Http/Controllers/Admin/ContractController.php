@@ -198,4 +198,68 @@ class ContractController extends Controller
 
         return response()->json($owner);
     }
+
+    public function listMonthly($contract)
+    {
+        $monthly_payments = MonthlyPayment::where([
+                ['contract_id', '=', $contract],
+                ['type', '=', 'M']
+        ])
+        ->get();
+
+        return view('admin.contracts.monthly_payment', compact('monthly_payments'));
+    }
+
+    public function updateMonthly(Request $request, $monthly)
+    {
+        if($request->pay_check == 'on'){
+            $payed = 1;
+        }else{
+            $payed = 0;
+        }
+
+        $update = MonthlyPayment::find($monthly);
+        $update->payed = $payed;
+        $update->save();
+
+        $monthly_payments = MonthlyPayment::where([
+            ['contract_id', '=', $request->contract_id],
+            ['type', '=', 'M']
+        ])
+            ->get();
+
+        return view('admin.contracts.monthly_payment', compact('monthly_payments'));
+    }
+
+    public function listTransfer($contract)
+    {
+        $transfers = MonthlyPayment::where([
+            ['contract_id', '=', $contract],
+            ['type', '=', 'R']
+        ])
+            ->get();
+
+        return view('admin.contracts.transfer', compact('transfers'));
+    }
+
+    public function updateTransfer(Request $request, $monthly)
+    {
+        if($request->pay_check == 'on'){
+            $payed = 1;
+        }else{
+            $payed = 0;
+        }
+
+        $update = MonthlyPayment::find($monthly);
+        $update->payed = $payed;
+        $update->save();
+
+        $transfers = MonthlyPayment::where([
+            ['contract_id', '=', $request->contract_id],
+            ['type', '=', 'R']
+        ])
+            ->get();
+
+        return view('admin.contracts.transfer', compact('transfers'));
+    }
 }

@@ -29,6 +29,9 @@ Route::group(['middleware' => ['auth']], function(){
         Route::get('properties/search/owner', 'PropertyController@searchOwner')->name('properties.search.owner');
         Route::get('contracts/search/property', 'ContractController@searchProperty')->name('properties.search.property');
         Route::get('contracts/search/customer', 'ContractController@searchCustomer')->name('properties.search.customer');
-
+        Route::get('contracts/monthly_payments/{contract}', 'ContractController@listMonthly')->name('contracts.monthly_payments');
+        Route::post('contracts/monthly_payments/update/{monthly}', 'ContractController@updateMonthly')->name('contracts.monthly_payments.update');
+        Route::get('contracts/transfers/{contract}', 'ContractController@listTransfer')->name('contracts.transfers');
+        Route::post('contracts/transfers/update/{transfer}', 'ContractController@updateTransfer')->name('contracts.transfers.update');
     });
 });
